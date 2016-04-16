@@ -17,13 +17,10 @@
   "undef": true,
   "unused": true,
   "strict": true,
-  "maxlen": 120,
+  "maxlen": 80,
   "browser": true,
   "jasmine": true,
   "node": true,
   "esnext": true,
-  "predef": [
-    "Phaser",
-    "game"
-  ]
+  "predef": []
 }
