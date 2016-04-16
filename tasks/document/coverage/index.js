@@ -12,10 +12,6 @@ let command = ([
 ]).join(' ');
 
 exec(command, (error, stdout, stderr) => {
-  if (error) {
-    throw error;
-  }
-
   if (stdout || stderr) {
     console.log(stdout + stderr);
   }
