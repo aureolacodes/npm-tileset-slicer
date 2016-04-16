@@ -1,8 +1,8 @@
 {
   "tileWidth": 32,
   "tileHeight": 32,
-  "marginX": 0,
-  "marginY": 0,
   "startX": 0,
-  "startY": 0
+  "startY": 0,
+  "paddingX": 0,
+  "paddingY": 0
 }
