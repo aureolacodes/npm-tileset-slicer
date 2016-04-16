@@ -1,41 +1,43 @@
 {
   "name": "tileset-slicer",
-  "version": "0.1.0",
-  "description": "Tileset Slicer",
-  "main": "dist/index.js",
-  "watch": {
-    "compile": "{src/*,src/**/*}"
+  "version": "0.0.0",
+  "description": "Helper tool to slice a tileset into single files.",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
   },
   "bin": {
-    "tilesetslicer": "./bin/tilesetslicer"
+    "tileset-slicer": "./src/bin/index.js"
   },
   "scripts": {
-    "documentation": "./node_modules/.bin/esdoc -c ./esdoc.json",
-    "test:jshint": "./node_modules/.bin/jshint src/*.js src/**/*.js",
-    "test:coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec --compilers js:babel-core/register --opts test/mocha.opts --bail test",
-    "test": "npm run test:jshint && npm run test:coverage",
-    "compile:config": "cp -r src/config dist",
-    "compile:babelify": "babel -d dist/ src/",
-    "compile:js": "npm run compile:babelify && npm run compile:config",
-    "compile": "npm run test && npm run compile:js",
-    "watch": "npm-watch",
-    "install": "npm run compile"
+    "test": "simply test"
   },
-  "author": "Christian Hanne <support@aureola.codes>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aureolacodes/tileset-slicer.git"
+  },
+  "keywords": [
+    "tileset",
+    "tile",
+    "image",
+    "slice",
+    "rpg"
+  ],
+  "author": "Chris Han <support@aureola.codes>",
   "license": "MIT",
-  "devDependencies": {
-    "babel-cli": "^6.4.0",
-    "babel-core": "^6.4.0",
-    "babel-preset-es2015": "^6.3.13",
-    "babelify": "^7.2.0",
-    "chai": "^3.4.1",
-    "esdoc": "^0.4.3",
-    "istanbul": "^0.4.1",
-    "jshint": "^2.8.0",
-    "mocha": "^2.3.4",
-    "npm-watch": "^0.1.1"
+  "bugs": {
+    "url": "https://github.com/aureolacodes/tileset-slicer/issues"
   },
+  "homepage": "https://github.com/aureolacodes/tileset-slicer#readme",
   "dependencies": {
+    "commander": "^2.9.0",
     "lwip": "0.0.8"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "esdoc": "^0.4.6",
+    "istanbul": "^0.4.3",
+    "jshint": "^2.9.1",
+    "mocha": "^2.4.5"
   }
 }

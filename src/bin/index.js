@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * TODO
  *
@@ -7,5 +9,7 @@
  */
 'use strict';
 
-import Slicer from './lib/Slicer.js';
-module.exports = new Slicer();
+const Binary = require('../lib/Binary.js');
+
+let binary = new Binary(process.argv);
+binary.run();
