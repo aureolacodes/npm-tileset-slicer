@@ -1,6 +1,6 @@
 {
   "name": "tileset-slicer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Helper tool to slice a tileset into single files.",
   "main": "src/index.js",
   "directories": {
