@@ -29,23 +29,28 @@ class Slicer {
   slice(filepath, config, callback) {
     this._callback = callback || this._fallback;
 
-    lwip.open(path.resolve(filepath), (error, image) => {
-      if (error) {
-        this._callback(error);
-      }
-      else {
-        config.width = image.width();
-        config.height = image.height();
+    try {
+      lwip.open(path.resolve(filepath), (error, image) => {
+        if (error) {
+          this._callback(error);
+        }
+        else {
+          config.width = image.width();
+          config.height = image.height();
 
-        this._tileset = new Tileset(config);
+          this._tileset = new Tileset(config);
 
-        this._index = 0;
-        this._tiles = [];
-        this._image = image;
+          this._index = 0;
+          this._tiles = [];
+          this._image = image;
 
-        this._nextTile();
-      }
-    });
+          this._nextTile();
+        }
+      });
+    }
+    catch(error) {
+      this._callback(error);
+    }
   }
 
   /**
