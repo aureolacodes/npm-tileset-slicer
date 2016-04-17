@@ -54,26 +54,17 @@ class Slicer {
    * @private
    */
   _nextTile() {
-    let tile = this._tileset.tile(this._index);
-    if (tile === null) {
+    let t = this._tileset.tile(this._index);
+    if (t === null) {
       this._callback(null, this._tiles);
     }
     else {
-      // For some reason this is necessary for lwip to
-      // calculate the extracted tile correctly.
-      let correction = 1;
-
-      let left = tile.x;
-      let top = tile.y;
-      let right = tile.x + tile.width - correction;
-      let bottom = tile.y + tile.height - correction;
-
-      this._image.extract(left, top, right, bottom, (error, newImage) => {
+      this._image.extract(t.left, t.top, t.right, t.bottom, (error, tile) => {
         if (error) {
           this._callback(error);
         }
         else {
-          this._tiles.push(newImage);
+          this._tiles.push(tile);
           this._index++;
 
           this._nextTile();

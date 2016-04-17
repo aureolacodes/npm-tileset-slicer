@@ -8,6 +8,12 @@
 'use strict';
 
 /**
+ * Used to correct tile position by one pixel.
+ * @type {number}
+ */
+const PIXEL = 1;
+
+/**
  * Defines the class for a single tile.
  */
 class Tile {
@@ -69,6 +75,46 @@ class Tile {
    */
   get height() {
     return this._height;
+  }
+
+  /**
+   * Returns top position of the tile.
+   *
+   * @return {number}
+   *   Top position of tile.
+   */
+  get top() {
+    return this.y;
+  }
+
+  /**
+   * Returns right position of the tile.
+   *
+   * @return {number}
+   *   Right position of tile.
+   */
+  get right() {
+    return this.x + this.width - PIXEL;
+  }
+
+  /**
+   * Returns bottom position of the tile.
+   *
+   * @return {number}
+   *   Bottom position of tile.
+   */
+  get bottom() {
+    return this.y + this.height - PIXEL;
+  }
+
+  /**
+   * Returns left position of the tile.
+   *
+   * @return {number}
+   *   Left position of tile.
+   */
+  get left() {
+    this.x;
   }
 
 }
