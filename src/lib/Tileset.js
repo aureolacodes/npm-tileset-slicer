@@ -28,7 +28,7 @@ class Tileset {
     this._height = config.height || 0;
 
     for (let key of Object.keys(defaults)) {
-      this[key] = config[key] || defaults[key];
+      this['_' + key] = config[key] || defaults[key];
     }
 
     this._tiles = [];
@@ -37,8 +37,8 @@ class Tileset {
         this.tiles.push(new Tile(
           this._calculateTileX(x),
           this._calculateTileY(y),
-          this._tileWidth,
-          this._tileHeight
+          this.tileWidth,
+          this.tileHeight
         ));
       }
     }
@@ -74,8 +74,8 @@ class Tileset {
    *   Number of tiles in x-direction.
    */
   get numTilesX() {
-    let numTilesX = this._width - this._startX + this._paddingX;
-    numTilesX /= this._tileWidth + this._paddingX;
+    let numTilesX = this.width - this.startX + this.paddingX;
+    numTilesX /= this.tileWidth + this.paddingX;
     return Math.floor(numTilesX);
   }
 
@@ -86,8 +86,8 @@ class Tileset {
    *   Number of tiles in y-direction.
    */
   get numTilesY() {
-    let numTilesY = this._height - this._startY + this._paddingY;
-    numTilesY /= this._tileHeight + this._paddingY;
+    let numTilesY = this.height - this.startX + this.paddingY;
+    numTilesY /= this.tileHeight + this.paddingY;
     return Math.floor(numTilesY);
   }
 
@@ -102,6 +102,86 @@ class Tileset {
   }
 
   /**
+   * Returns the total width of the tileset / the image.
+   *
+   * @return {number}
+   *   Width of the tileset.
+   */
+  get width() {
+    return this._width || 0;
+  }
+
+  /**
+   * Returns the total height of the tileset / the image.
+   *
+   * @return {number}
+   *   Height of the tileset.
+   */
+  get height() {
+    return this._height || 0;
+  }
+
+  /**
+   * Returns width of a single tile.
+   *
+   * @return {number}
+   *   Width of a single tile.
+   */
+  get tileWidth() {
+    return this._tileWidth || defaults.tileWidth;
+  }
+
+  /**
+   * Returns height of a single tile.
+   *
+   * @return {number}
+   *   Width of a height tile.
+   */
+  get tileHeight() {
+    return this._tileHeight || defaults.tileHeight;
+  }
+
+  /**
+   * Returns start position in x-direction.
+   *
+   * @return {number}
+   *   Start position in x-direction.
+   */
+  get startX() {
+    return this._startX || defaults.startX;
+  }
+
+  /**
+   * Returns start position in y-direction.
+   *
+   * @return {number}
+   *   Start position in y-direction.
+   */
+  get startY() {
+    return this._startY || defaults.startY;
+  }
+
+  /**
+   * Returns horizontal padding between tiles.
+   *
+   * @return {number}
+   *   Horizontal padding between tiles.
+   */
+  get paddingX() {
+    return this._paddingX || defaults.paddingX;
+  }
+
+  /**
+   * Returns vertical padding between tiles.
+   *
+   * @return {number}
+   *   Vertical padding between tiles.
+   */
+  get paddingY() {
+    return this._paddingY || defaults.paddingY;
+  }
+
+  /**
    * Calculates the pixel value of a tile's relative x-position.
    *
    * @param {number} x
@@ -113,7 +193,7 @@ class Tileset {
    * @private
    */
   _calculateTileX(x) {
-    return this._startX + x * (this._tileWidth + this._paddingX);
+    return this.startX + x * (this.tileWidth + this.paddingX);
   }
 
   /**
@@ -128,7 +208,7 @@ class Tileset {
    * @private
    */
   _calculateTileY(y) {
-    return this._startY + y * (this._tileHeight + this._paddingY);
+    return this.startY + y * (this.tileHeight + this.paddingY);
   }
 
 }
