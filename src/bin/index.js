@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * TODO
+ * Entry point for tileset slicer command line interface.
  *
  * @author Chris Han <support@aureola.codes>
  * @copyright 2016, Aureola
@@ -9,7 +9,7 @@
  */
 'use strict';
 
-const Binary = require('../lib/Binary.js');
+const Command = require('../lib/Command.js');
 
-let binary = new Binary(process.argv, process.cwd());
-binary.run();
+let command = new Command(process.argv, process.cwd());
+command.run();

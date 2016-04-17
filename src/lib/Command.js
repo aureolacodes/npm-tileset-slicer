@@ -1,5 +1,5 @@
 /**
- * TODO
+ * Contains the class responsible for command line operations.
  *
  * @author Chris Han <support@aureola.codes>
  * @copyright 2016, Aureola
@@ -15,17 +15,17 @@ const config = require('../../package.json');
 const defaults = require('../config/defaults.json');
 
 /**
- * TODO
+ * Defines the class responsible for command line operations.
  */
-class Binary {
+class Command {
 
   /**
-   * TODO
+   * Setup command line interface using commander.
    *
    * @param {array} argv
-   *   TODO
+   *   Raw array of command line arguments.
    * @param {string} outputDir
-   *   TODO
+   *   Working directory: process.cwd().
    */
   constructor(argv, outputDir) {
     this._outputDir = outputDir;
@@ -49,7 +49,7 @@ class Binary {
   }
 
   /**
-   * TODO
+   * Starts the tileset slicing process.
    */
   run() {
     if (typeof this._program.args[0] === 'undefined') {
@@ -78,33 +78,33 @@ class Binary {
   }
 
   /**
-   * TODO
+   * Returns the full path of a single tile.
    *
    * @param {number} i
-   *   TODO
+   *   Index of the tile.
    *
    * @return {string}
-   *   TODO
+   *   Full path of single tile.
    */
   tilePath(i) {
     return path.resolve(this.outputDir(), 'tile-' +i + '.png');
   }
 
   /**
-   * TODO
+   * Returns the full output directory path.
    *
    * @return {string}
-   *   TODO
+   *   Output directory.
    */
   outputDir() {
     return path.resolve(this._outputDir, this._program.output);
   }
 
   /**
-   * TODO
+   * Array of options for the command line interface.
    *
    * @return {Array}
-   *   TODO
+   *   Array of command line options.
    *
    * @private
    */
@@ -162,7 +162,7 @@ class Binary {
   }
 
   /**
-   * TODO
+   * Processes the next tile in the queue.
    *
    * @private
    */
@@ -185,4 +185,4 @@ class Binary {
 
 }
 
-module.exports = Binary;
+module.exports = Command;
