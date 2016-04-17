@@ -30,53 +30,22 @@ class Binary {
   constructor(argv, outputDir) {
     this._outputDir = outputDir;
 
-    this._program = program
-      .version(config.version)
-      .usage('[options] <filename>')
-      .description(config.description)
-      .option(
-        '--tileWidth <n>',
-        'Tile width (default: ' + defaults.tileWidth + ').',
-        parseFloat,
-        defaults.tileWidth
-      )
-      .option(
-        '--tileHeight <n>',
-        'Tile height (default: ' + defaults.tileHeight + ').',
-        parseFloat,
-        defaults.tileHeight
-      )
-      .option(
-        '--startX <n>',
-        'Start x-position for slicer (default: ' + defaults.startX + ').',
-        parseFloat,
-        defaults.startX
-      )
-      .option(
-        '--startY <n>',
-        'Start y-position for slicer (default: ' + defaults.startY + ').',
-        parseFloat,
-        defaults.startY
-      )
-      .option(
-        '--paddingX <n>',
-        'Padding between tiles (default: ' + defaults.paddingX + ').',
-        parseFloat,
-        defaults.paddingX
-      )
-      .option(
-        '--paddingY <n>',
-        'Padding between tiles (default: ' + defaults.paddingY + ').',
-        parseFloat,
-        defaults.paddingY
-      )
-      .option(
-        '-o, --output <directory>',
-        'Output directory (default: ' + this._outputDir + ').',
-        null,
-        this._outputDir
-      )
-      .parse(argv);
+    this._program = program;
+    this._program.version(config.version);
+    this._program.usage('[options] <filename>');
+    this._program.description(config.description);
+
+    let options = this._options();
+    for (let i = 0, len = options.length; i < len; i++) {
+      this._program.option(
+        options[i].name,
+        options[i].desc + ' (default: ' + options[i].value + ').',
+        options[i].callback,
+        options[i].value
+      );
+    }
+
+    this._program.parse(argv);
   }
 
   /**
@@ -111,30 +80,107 @@ class Binary {
   /**
    * TODO
    *
+   * @param {number} i
+   *   TODO
+   *
+   * @return {string}
+   *   TODO
+   */
+  tilePath(i) {
+    return path.resolve(this.outputDir(), 'tile-' +i + '.png');
+  }
+
+  /**
+   * TODO
+   *
+   * @return {string}
+   *   TODO
+   */
+  outputDir() {
+    return path.resolve(this._outputDir, this._program.output);
+  }
+
+  /**
+   * TODO
+   *
+   * @return {Array}
+   *   TODO
+   *
+   * @private
+   */
+  _options() {
+    return [
+      {
+        name: '-o, --output <directory>',
+        desc: 'Output directory',
+        callback: null,
+        value: this._outputDir
+      },
+      {
+        name: '-f, --format <format>',
+        desc: 'Output format',
+        callback: null,
+        value: defaults.format
+      },
+      {
+        name: '-w, --tileWidth <n>',
+        desc: 'Tile width',
+        callback: parseFloat,
+        value: defaults.tileWidth
+      },
+      {
+        name: '-h, --tileHeight <n>',
+        desc: 'Tile height',
+        callback: parseFloat,
+        value: defaults.tileHeight
+      },
+      {
+        name: '-x, --startX <n>',
+        desc: 'Start x-position for slicer',
+        callback: parseFloat,
+        value: defaults.startX
+      },
+      {
+        name: '-y, --startY <n>',
+        desc: 'Start y-position for slicer',
+        callback: parseFloat,
+        value: defaults.startY
+      },
+      {
+        name: '--paddingX <n>',
+        desc: 'Padding between tiles',
+        callback: parseFloat,
+        value: defaults.paddingX
+      },
+      {
+        name: '--paddingY <n>',
+        desc: 'Padding between tiles',
+        callback: parseFloat,
+        value: defaults.paddingY
+      }
+    ];
+  }
+
+  /**
+   * TODO
+   *
    * @private
    */
   _process() {
     let tile = this._tiles[this._index] || null;
-    if (tile) {
-      let outputDir = path.resolve(this._outputDir, this._program.output);
-
-      let filename = 'tile-' + this._index + '.png';
-      let filepath = path.resolve(outputDir, filename);
-
-      tile.writeFile(filepath, 'png', {}, error => {
-        if (error) {
-          throw error;
-        }
-
-        this._index++;
-        if (typeof this._tiles[this._index] !== 'undefined') {
-          this._process();
-        }
-        else {
-          console.log(this._tiles.length + ' tiles have been created.');
-        }
-      });
+    if (!tile) {
+      console.log(this._index + ' tiles have been created.');
+      return;
     }
+
+    tile.writeFile(this.tilePath(this._index), this.format, {}, error => {
+      if (error) {
+        throw error;
+      }
+
+      this._index++;
+      this._process();
+    });
   }
 
 }
