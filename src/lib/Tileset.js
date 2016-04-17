@@ -24,8 +24,8 @@ class Tileset {
   constructor(config) {
     config = config || {};
 
-    this._width = config.width || 0;
-    this._height = config.height || 0;
+    this._width = config.width || defaults.width;
+    this._height = config.height || defaults.height;
 
     for (let key of Object.keys(defaults)) {
       this['_' + key] = config[key] || defaults[key];
@@ -108,7 +108,7 @@ class Tileset {
    *   Width of the tileset.
    */
   get width() {
-    return this._width || 0;
+    return this._width || defaults.width;
   }
 
   /**
@@ -118,7 +118,7 @@ class Tileset {
    *   Height of the tileset.
    */
   get height() {
-    return this._height || 0;
+    return this._height || defaults.height;
   }
 
   /**
