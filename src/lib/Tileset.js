@@ -1,5 +1,5 @@
 /**
- * TODO
+ * Contains a class responsible for managing tiles in a tileset.
  *
  * @author Chris Han <support@aureola.codes>
  * @copyright 2016, Aureola
@@ -11,15 +11,15 @@ const Tile = require('./Tile');
 const defaults = require('../config/defaults.json');
 
 /**
- * TODO
+ * Defines a class responsible for managing tiles in a tileset.
  */
 class Tileset {
 
   /**
-   * TODO
+   * Sets up and calculates the tileset.
    *
    * @param {object} config
-   *   TODO
+   *   Config object. Check defaults.json for details.
    */
   constructor(config) {
     config = config || {};
@@ -35,8 +35,8 @@ class Tileset {
     for (let y = 0, maxY = this.numTilesY; y < maxY; y++) {
       for (let x = 0, maxX = this.numTilesX; x < maxX; x++) {
         this.tiles.push(new Tile(
-          this._calculateX(x),
-          this._calculateY(y),
+          this._calculateTileX(x),
+          this._calculateTileY(y),
           this._tileWidth,
           this._tileHeight
         ));
@@ -45,33 +45,33 @@ class Tileset {
   }
 
   /**
-   * TODO
+   * Returns the tile with the given index.
    *
    * @param {number} index
-   *   TODO
+   *   Index of the tile in the tiles array.
    *
    * @return {Tile|null}
-   *   TODO
+   *   Either the requested tile or null if not found.
    */
   tile(index) {
     return this._tiles[index] || null;
   }
 
   /**
-   * TODO
+   * Returns an array of all tiles of this tileset.
    *
    * @return {Array}
-   *   TODO
+   *   Array of tiles.
    */
   get tiles() {
     return this._tiles;
   }
 
   /**
-   * TODO
+   * Returns the number of tiles in x-direction.
    *
    * @return {number}
-   *   TODO
+   *   Number of tiles in x-direction.
    */
   get numTilesX() {
     let numTilesX = this._width - this._startX + this._paddingX;
@@ -80,10 +80,10 @@ class Tileset {
   }
 
   /**
-   * TODO
+   * Returns the number of tiles in y-direction.
    *
    * @return {number}
-   *   TODO
+   *   Number of tiles in y-direction.
    */
   get numTilesY() {
     let numTilesY = this._height - this._startY + this._paddingY;
@@ -92,42 +92,42 @@ class Tileset {
   }
 
   /**
-   * TODO
+   * Returns the total number of tiles in the tileset.
    *
    * @return {number}
-   *   TODO
+   *   Total number of tiles.
    */
   get numTiles() {
     return this.numTilesX * this.numTilesY;
   }
 
   /**
-   * TODO
+   * Calculates the pixel value of a tile's relative x-position.
    *
    * @param {number} x
-   *   TODO
+   *   Relative x-position.
    *
    * @return {number}
-   *   TODO
+   *   Absolute x-position of tile.
    *
    * @private
    */
-  _calculateX(x) {
+  _calculateTileX(x) {
     return this._startX + x * (this._tileWidth + this._paddingX);
   }
 
   /**
-   * TODO
+   * Calculates the pixel value of a tile's relative y-position.
    *
    * @param {number} y
-   *   TODO
+   *   Relative y-position.
    *
    * @return {number}
-   *   TODO
+   *   Absolute y-position of tile.
    *
    * @private
    */
-  _calculateY(y) {
+  _calculateTileY(y) {
     return this._startY + y * (this._tileHeight + this._paddingY);
   }
 
