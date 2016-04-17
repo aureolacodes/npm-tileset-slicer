@@ -28,7 +28,8 @@ class Command {
    *   Working directory: process.cwd().
    */
   constructor(argv, outputDir) {
-    this._outputDir = outputDir;
+    argv = argv || [];
+    this._outputDir = outputDir || '';
 
     this._program = program;
     this._program.version(config.version);
@@ -50,11 +51,14 @@ class Command {
 
   /**
    * Starts the tileset slicing process.
+   *
+   * @return {boolean}
+   *   True, if process could be started.
    */
   run() {
     if (typeof this._program.args[0] === 'undefined') {
       console.log('No input image defined.');
-      return;
+      return false;
     }
 
     let slicer = new Slicer();
@@ -75,6 +79,8 @@ class Command {
 
       this._process();
     });
+
+    return true;
   }
 
   /**
