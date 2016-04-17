@@ -24,8 +24,12 @@ class Binary {
    *
    * @param {array} argv
    *   TODO
+   * @param {string} outputDir
+   *   TODO
    */
-  constructor(argv) {
+  constructor(argv, outputDir) {
+    this._outputDir = outputDir;
+
     this._program = program
       .version(config.version)
       .usage('[options] <filename>')
@@ -68,9 +72,9 @@ class Binary {
       )
       .option(
         '-o, --output <directory>',
-        'Output directory (default: ' + process.cwd() + ').',
+        'Output directory (default: ' + this._outputDir + ').',
         null,
-        process.cwd()
+        this._outputDir
       )
       .parse(argv);
   }
@@ -97,11 +101,6 @@ class Binary {
         throw error;
       }
 
-      this._outputDir = process.cwd();
-      if (this._program.output) {
-        this._outputDir = path.resolve(this._outputDir, this._program.output);
-      }
-
       this._index = 0;
       this._tiles = tiles;
 
@@ -117,8 +116,10 @@ class Binary {
   _process() {
     let tile = this._tiles[this._index] || null;
     if (tile) {
+      let outputDir = path.resolve(this._outputDir, this._program.output);
+
       let filename = 'tile-' + this._index + '.png';
-      let filepath = path.resolve(this._outputDir, filename);
+      let filepath = path.resolve(outputDir, filename);
 
       tile.writeFile(filepath, 'png', {}, error => {
         if (error) {

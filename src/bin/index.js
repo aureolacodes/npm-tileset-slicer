@@ -11,5 +11,5 @@
 
 const Binary = require('../lib/Binary.js');
 
-let binary = new Binary(process.argv);
+let binary = new Binary(process.argv, process.cwd());
 binary.run();
