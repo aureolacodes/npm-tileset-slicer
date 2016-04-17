@@ -114,7 +114,7 @@ class Tile {
    *   Left position of tile.
    */
   get left() {
-    this.x;
+    return this.x;
   }
 
 }
