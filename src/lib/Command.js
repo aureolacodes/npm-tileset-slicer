@@ -119,13 +119,13 @@ class Command {
       {
         name: '-o, --output <directory>',
         desc: 'Output directory',
-        callback: null,
+        callback: (value) => { return value; },
         value: this._outputDir
       },
       {
         name: '-f, --format <format>',
         desc: 'Output format',
-        callback: null,
+        callback: (value) => { return value; },
         value: defaults.format
       },
       {
@@ -179,7 +179,8 @@ class Command {
       return;
     }
 
-    tile.writeFile(this.tilePath(this._index), this.format, {}, error => {
+    let filepath = this.tilePath(this._index);
+    tile.writeFile(filepath, this._program.format, {}, error => {
       if (error) {
         throw error;
       }
